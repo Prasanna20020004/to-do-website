@@ -1,0 +1,52 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% include "base.html" %}
+
+{% block styles %}
+<style>
+    .centered-heading {
+        display: flex;
+        justify-content: center; /* center horizontally */
+        align-items: center; /* center vertically */
+        height: 200px; /* adjust height as needed */
+        margin-top: 20px; /* margin top for spacing */
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    {{ render_form(form) }}
+</div>
+
+<div class="container centered-heading">
+    <h2>Your to-do list</h2>
+</div>
+
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">To Do</th>
+                <th scope="col">Update/Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in list %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.todo }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Update and Delete Buttons">
+                        <a href="{{ url_for('update', tid=item.id) }}" class="btn btn-primary">Update</a>
+                        <a href="{{ url_for('delete', tid=item.id) }}" class="btn btn-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
